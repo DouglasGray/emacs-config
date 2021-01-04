@@ -119,9 +119,9 @@
 ;; Enable moving from window to window using Shift and the arrow keys
 (windmove-default-keybindings)
 
-;; Easily edit init.el
-(defun find-config ()
-    "Edit init.el"
+;; Easily open and edit init.el
+(defun open-config ()
+    "Open init.el"
     (interactive)
     (find-file "~/.emacs.d/init.el"))
 
@@ -146,6 +146,16 @@
   :init
   (add-hook 'after-init-hook (lambda () (load-theme 'atom-one-dark))))
 
+
+;; **********
+;; ** IELM **
+;; **********
+
+;; By default, IELM evaluates complete expressions automatically as
+;; soon you as you press RET, which is annoying when parentheses are
+;; automatically paired. With this set to nil we must use C-j to
+;; evaluate the expression.
+(setq ielm-dynamic-return nil) 
 
 ;; **************
 ;; ** Org mode **
@@ -194,6 +204,16 @@
 		   (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
 					     (quote regexp) "\n]+>")))
 		(org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+
+(defun open-todo ()
+    "Open org-mode todo"
+    (interactive)
+    (find-file "~/org/todo.org.gpg"))
+
+(defun open-journal ()
+    "Open org-mode journal"
+    (interactive)
+    (find-file "~/org/journal.org.gpg"))
 
 
 ;; **************

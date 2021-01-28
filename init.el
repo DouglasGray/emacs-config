@@ -125,6 +125,11 @@
     (interactive)
     (find-file "~/.emacs.d/init.el"))
 
+;; Open current buffer in separate 'window'
+(defun pop-buffer ()
+  "Open the current buffer in a different frame. Equivalent to make-frame-command"
+  (make-frame-command))
+
 ;; ************
 ;; ** Themes **
 ;; ************
@@ -173,6 +178,7 @@
 
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/org/todo.org.gpg" "Tasks") "* TODO %^{Description} %^g\n  %?" :empty-lines-before 1)
+	("s" "Shopping item" entry (file+headline "~/org/todo.org.gpg" "Shopping") "* TODO %^{Item}" :empty-lines-after 1)
 	("j" "Journal" entry (file+datetree "~/org/journal.org.gpg") "* %^{Heading}  %^g\n  %?\n\n  /Added/: %U" :empty-lines-after 1)
 	("n" "Note" entry (file+datetree "~/org/notes.org.gpg" "Dump") "* %^{Heading} %^g\n  %?\n\n  /Added/: %U" :empty-lines-after 1)))
 
@@ -214,6 +220,16 @@
     "Open org-mode journal"
     (interactive)
     (find-file "~/org/journal.org.gpg"))
+
+(defun open-notes ()
+   "Open org-mode notes"
+    (interactive)
+    (find-file "~/org/notes.org.gpg"))
+
+(defun open-address-book ()
+   "Open org-mode address book"
+    (interactive)
+    (find-file "~/org/address_book.org.gpg"))
 
 
 ;; **************
@@ -391,7 +407,8 @@
   :hook (rustic-mode . my-rustic-mode-hook-fn)
   :bind (("C-x `" . flymake-goto-next-error)
 	 ("C-c e n" . flymake-goto-next-error)
-	 ("C-c e p" . flymake-goto-prev-error)))
+	 ("C-c e p" . flymake-goto-prev-error))
+  :load-path "~/projects/oss/rustic")
 
 ;; JSON / TOML
 (use-package json-mode)
@@ -404,3 +421,7 @@
 ;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
 (require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
 ;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+
+;; Lisp / Sexps
+(use-package rainbow-blocks
+  :init (add-to-list 'auto-mode-alist '("\\.sexp\\'" . rainbow-blocks-mode)))

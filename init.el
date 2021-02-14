@@ -407,8 +407,7 @@
   :hook (rustic-mode . my-rustic-mode-hook-fn)
   :bind (("C-x `" . flymake-goto-next-error)
 	 ("C-c e n" . flymake-goto-next-error)
-	 ("C-c e p" . flymake-goto-prev-error))
-  :load-path "~/projects/oss/rustic")
+	 ("C-c e p" . flymake-goto-prev-error)))
 
 ;; JSON / TOML
 (use-package json-mode)

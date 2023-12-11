@@ -40,8 +40,11 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-(set-face-attribute 'default nil :height 120)
-(setq-default line-spacing 0.2)
+(set-face-attribute 'default nil :height 108)
+(setq-default line-spacing 0.25)
+
+;; Display line numbers on the left
+(global-display-line-numbers-mode)
 
 ;; Enter fullscreen on open
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -87,7 +90,9 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-(define-key global-map (kbd "RET") 'newline-and-indent)
+;; Was 'newline-and-indent but the behaviour changed for some reason
+;; and it failed to indent.
+(define-key global-map (kbd "RET") 'newline)
 
 ;; When you visit a file, point goes to the last place where it
 ;; was when you previously visited the same file.
@@ -407,7 +412,8 @@
   :hook (rustic-mode . my-rustic-mode-hook-fn)
   :bind (("C-x `" . flymake-goto-next-error)
 	 ("C-c e n" . flymake-goto-next-error)
-	 ("C-c e p" . flymake-goto-prev-error)))
+	 ("C-c e p" . flymake-goto-prev-error)
+	 ("M-RET" . lsp-execute-code-action)))
 
 ;; JSON / TOML
 (use-package json-mode)
@@ -420,6 +426,14 @@
 ;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
 (require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
 ;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+(use-package ocamlformat
+  :custom (ocamlformat-enable 'enable-outside-detected-project)
+  :hook (before-save . ocamlformat-before-save))
+
+(use-package dune
+  :init
+  (add-to-list 'auto-mode-alist '("/dune\\'" . dune-mode))
+  (add-to-list 'auto-mode-alist '("/dune-project\\'" . dune-mode)))
 
 ;; Lisp / Sexps
 (use-package rainbow-blocks
